@@ -46,9 +46,23 @@ X_test_vec = vectorizer.transform(X_test)
 model = LogisticRegression(max_iter=1000)
 model.fit(X_train_vec, y_train)
 
-# Predictions
-y_pred = model.predict(X_test_vec)
-
 # Evaluation
 print("Accuracy:", accuracy_score(y_test, y_pred))
 print("\nClassification Report:\n", classification_report(y_test, y_pred))
+
+# Predictions
+# Function to predict new news
+def predict_news(news_text):
+    news_text = clean_text(news_text)
+    news_vec = vectorizer.transform([news_text])
+    prediction = model.predict(news_vec)
+
+    if prediction[0] == 1:
+        return "Fake News"
+    else:
+        return "Real News"
+
+# Example test
+sample_news = "Government announces new education policy for engineering students"
+print("\nSample Prediction:", predict_news(sample_news))
+
